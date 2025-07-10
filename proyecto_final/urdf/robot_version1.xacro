@@ -1,0 +1,254 @@
+<?xml version="1.0" ?>
+<robot name="robot_version1" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find proyecto_final)/urdf/materials.xacro" />
+<xacro:include filename="$(find proyecto_final)/urdf/robot_version1.trans" />
+<xacro:include filename="$(find proyecto_final)/urdf/robot_version1.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="-1.1580046200244058e-17 0.024999999999999994 5.790023100122029e-18" rpy="0 0 0"/>
+    <mass value="3.082687791334984"/>
+    <inertia ixx="0.002569" iyy="0.003853" izz="0.002569" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link1_1">
+  <inertial>
+    <origin xyz="9.008917649016016e-18 0.0437607595854386 0.035413080138187114" rpy="0 0 0"/>
+    <mass value="7.924962450619459"/>
+    <inertia ixx="0.016525" iyy="0.016428" izz="0.010003" ixy="0.0" iyz="-0.002169" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.05 -0.0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.05 -0.0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link2_1">
+  <inertial>
+    <origin xyz="-8.314822887740735e-18 0.016342334380787568 0.12980540062847232" rpy="0 0 0"/>
+    <mass value="17.173025824624403"/>
+    <inertia ixx="0.10519" iyy="0.093316" izz="0.03334" ixy="-0.0" iyz="-0.020118" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0 -0.1 -0.1" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 -0.1 -0.1" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link3_1">
+  <inertial>
+    <origin xyz="1.013394198499686e-17 0.1027347532259798 0.01991771451421981" rpy="0 0 0"/>
+    <mass value="14.090338033289418"/>
+    <inertia ixx="0.060349" iyy="0.028484" izz="0.049478" ixy="-0.0" iyz="-0.013683" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.2 -0.3" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.2 -0.3" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link4_1">
+  <inertial>
+    <origin xyz="0.0 0.016342334380787638 0.12980540062847234" rpy="0 0 0"/>
+    <mass value="17.173025824624403"/>
+    <inertia ixx="0.10519" iyy="0.093316" izz="0.03334" ixy="0.0" iyz="-0.020118" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0 -0.35 -0.4" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 -0.35 -0.4" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link5_1">
+  <inertial>
+    <origin xyz="0.0 0.11444820806225936 0.003509195158339584" rpy="0 0 0"/>
+    <mass value="14.090338033289422"/>
+    <inertia ixx="0.071182" iyy="0.017844" izz="0.07095" ixy="-0.0" iyz="-0.004648" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.45 -0.6" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link5_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.45 -0.6" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link5_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link6_1">
+  <inertial>
+    <origin xyz="1.7953246794872857e-11 3.3854696823709673e-10 0.02603270456929907" rpy="0 0 0"/>
+    <mass value="3.1925877913349834"/>
+    <inertia ixx="0.002669" iyy="0.00271" izz="0.003902" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.0 -0.65 -0.65" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link6_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.0 -0.65 -0.65" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/link6_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="gripper2_1">
+  <inertial>
+    <origin xyz="-0.005999999025635234 3.4301603779596235e-09 0.012459448647346716" rpy="0 0 0"/>
+    <mass value="0.11617995373088826"/>
+    <inertia ixx="4.7e-05" iyy="1.7e-05" izz="3.2e-05" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.65 -0.71" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/gripper2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.65 -0.71" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/gripper2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="griper1_1">
+  <inertial>
+    <origin xyz="0.006000000974364768 3.4301603779596235e-09 0.012459448647346716" rpy="0 0 0"/>
+    <mass value="0.11617995373088826"/>
+    <inertia ixx="4.7e-05" iyy="1.7e-05" izz="3.2e-05" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.65 -0.71" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/griper1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0 -0.65 -0.71" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find proyecto_final)/meshes/griper1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="motor1" type="continuous">
+  <origin xyz="0.0 0.05 0.0" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="link1_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="motor2" type="continuous">
+  <origin xyz="-0.0 0.05 0.1" rpy="0 0 0"/>
+  <parent link="link1_1"/>
+  <child link="link2_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+</joint>
+
+<joint name="motor3" type="continuous">
+  <origin xyz="0.0 0.1 0.2" rpy="0 0 0"/>
+  <parent link="link2_1"/>
+  <child link="link3_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="motor4" type="continuous">
+  <origin xyz="-0.0 0.15 0.1" rpy="0 0 0"/>
+  <parent link="link3_1"/>
+  <child link="link4_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+</joint>
+
+<joint name="motor5" type="continuous">
+  <origin xyz="0.0 0.1 0.2" rpy="0 0 0"/>
+  <parent link="link4_1"/>
+  <child link="link5_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="motor6" type="continuous">
+  <origin xyz="-0.0 0.2 0.05" rpy="0 0 0"/>
+  <parent link="link5_1"/>
+  <child link="link6_1"/>
+  <axis xyz="0.0 0.0 1.0"/>
+</joint>
+
+<joint name="Corredera9" type="prismatic">
+  <origin xyz="0.0 0.0 0.06" rpy="0 0 0"/>
+  <parent link="link6_1"/>
+  <child link="gripper2_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="-0.006" lower="-0.03" effort="100" velocity="100"/>
+</joint>
+
+<joint name="Corredera10" type="prismatic">
+  <origin xyz="0.0 0.0 0.06" rpy="0 0 0"/>
+  <parent link="link6_1"/>
+  <child link="griper1_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.03" lower="0.006" effort="100" velocity="100"/>
+</joint>
+
+</robot>
