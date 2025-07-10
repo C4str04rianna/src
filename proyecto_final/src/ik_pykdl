@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+import rospy
+from sensor_msgs.msg import JointState
+import numpy as np
+import PyKDL as kdl
+from urdf_parser_py.urdf import URDF
+from kdl_parser_py.urdf import treeFromUrdfModel
+
+from markers import *
+from functions import*
+
+if __name__ == '__main__':
+
+ robot = URDF.from_xml_file('../urdf/robot_version1.urdf')  # Indicar la definicion estructural y dinamica del robot.
+ ok, tree = treeFromUrdfModel(robot)
+ chain = tree.getChain("base_link", "link6_1") # Indicar donde empieza y termina la cadena cinematica.
+ 
+ ik_solver = kdl.ChainIkSolverPos_LMA(chain) # Resolver la cinematica inversa.
+
+ #q_min = kdl.JntArray(chain.getNrOfJoints())
+ #q_max = kdl.JntArray(chain.getNrOfJoints())
+ 
+ #for i in range(chain.getNrOfJoints()):
+ # q_min[i] = -np.pi*2
+ # q_max[i] = np.pi*2
+
+ #fk_solver = kdl.ChainFkSolverPos_recursive(chain)
+ #vel_solver = kdl.ChainIkSolverVel_pinv(chain)
+
+ # pose, es la combinacion de posicion y orientacion del robot.
+ target_pose = kdl.Frame(kdl.Rotation.RPY(0.43, 0.123, 0.212), kdl.Vector(0.5, 0.0, 0.5)) # Indicar la pose deseada.
+ q_init = kdl.JntArray(chain.getNrOfJoints()) # Variable de la pose inicial, todo en cero para este caso.
+ q_out = kdl.JntArray(chain.getNrOfJoints()) # Variable de la pose final, todo en cero para este caso.
+
+ ik_solver.CartToJnt(q_init, target_pose, q_out) # Resolver la cinematica la posicion deseada.
+ ql_out = [q_out[i] for i in range(q_out.rows())] # Convertir el resultado a tipo lista.
+
+# q_init[1] = -np.pi/4 # Hombro: 45°
+# q_init[2] = np.pi/2 # Codo: 90° => Codo arriba
+ 
+ rospy.init_node("testForwardKine")
+ pub = rospy.Publisher('joint_states', JointState, queue_size=10)
+ bmarker = BallMarker(color['GREEN'])
+
+ # Joint names
+ jnames = ['motor1', 'motor2', 'motor3', 'motor4', 'motor5', 'motor6']
+ # Joint Configuration
+ q = ql_out
+
+ # End effector with respect to the base
+ T = fkine(q)
+ print( np.round(T, 3) )
+ bmarker.position(T)
+
+ # Object (message) whose type is JointState
+ jstate = JointState()
+ # Set values to the message
+ jstate.header.stamp = rospy.Time.now()
+ jstate.name = jnames
+ # Add the head joint value (with value 0) to the joints
+ jstate.position = q
+
+ # Loop rate (in Hz)
+ rate = rospy.Rate(100)
+ # Continuous execution loop
+ while not rospy.is_shutdown():
+  # Current time (needed for ROS)
+  jstate.header.stamp = rospy.Time.now()
+  # Publish the message
+  pub.publish(jstate)
+  bmarker.publish()
+  # Wait for the next iteration
+  rate.sleep()

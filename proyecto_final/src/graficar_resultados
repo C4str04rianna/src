@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Posición deseada (¡LA MISMA QUE EN TU test_diffkine!)
+xd = np.array([0.0, 0.7, 0.7])
+
+# Cargar datos
+xcurrent = np.loadtxt("/home/user/xcurrent.txt")
+xdesired = np.tile(xd, (len(xcurrent), 1))
+
+# Crear figura
+fig = plt.figure(figsize=(12, 10))
+
+# --- Gráfica 3D ---
+ax1 = fig.add_subplot(211, projection='3d')
+ax1.plot(xcurrent[:,0], xcurrent[:,1], xcurrent[:,2], 'r-', label='Actual', linewidth=2)
+ax1.plot(xdesired[:,0], xdesired[:,1], xdesired[:,2], 'g--', label='Deseada', linewidth=2)
+ax1.set_title('Trayectoria 3D del efector final', fontsize=12)
+ax1.set_xlabel('X [m]'); ax1.set_ylabel('Y [m]'); ax1.set_zlabel('Z [m]')
+ax1.legend()
+
+# Ajustar ángulo de vista (elevación, azimut)
+ax1.view_init(elev=30, azim=45)  # <--- ¡Nuevo! Cambia estos valores según necesites
+
+# --- Gráficas 2D (se mantienen igual) ---
+t = np.arange(len(xcurrent))
+ax2 = fig.add_subplot(234)
+ax2.plot(t, xcurrent[:,0], 'r-', label='Actual')
+ax2.plot(t, xdesired[:,0], 'g--', label='Deseada')
+ax2.set_title('Posición X'); ax2.grid(True)
+
+ax3 = fig.add_subplot(235)
+ax3.plot(t, xcurrent[:,1], 'r-')
+ax3.plot(t, xdesired[:,1], 'g--')
+ax3.set_title('Posición Y'); ax3.grid(True)
+
+ax4 = fig.add_subplot(236)
+ax4.plot(t, xcurrent[:,2], 'r-')
+ax4.plot(t, xdesired[:,2], 'g--')
+ax4.set_title('Posición Z'); ax4.grid(True)
+
+plt.tight_layout()
+plt.savefig("trayectoria_efector_mejor_angulo.png", dpi=150)
+print("Gráfica guardada como 'trayectoria_efector_mejor_angulo.png'")

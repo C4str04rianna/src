@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+import PyKDL as kdl
+from urdf_parser_py.urdf import URDF
+from kdl_parser_py.urdf import treeFromUrdfModel
+import rospy
+import numpy as np
+import actionlib
+from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryGoal
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+
+if __name__ == '__main__':
+    
+  robot = URDF.from_xml_file('../urdf/robot_version1.urdf')  # Indicar la definicion estructural y dinamica del robot.
+  ok, tree = treeFromUrdfModel(robot)
+  chain = tree.getChain("base_link", "link6_1") # Indicar donde empieza y termina la cadena cinematica.
+
+  ik_solver = kdl.ChainIkSolverPos_LMA(chain) # Resolver la cinematica inversa.
+
+  target_pose = kdl.Frame(kdl.Rotation.RPY(-3.14, 0.0, 1.57), kdl.Vector(0.0, 0.5, 0.7)) # Indicar la pose deseada.
+  q_init = kdl.JntArray(chain.getNrOfJoints()) # Variable de la pose inicial, todo en cero para este caso.
+  q_out = kdl.JntArray(chain.getNrOfJoints()) # Variable de la pose final, todo en cero para este caso.
+
+  ik_solver.CartToJnt(q_init, target_pose, q_out) # Resolver la cinematica la posicion deseada.
+  ql_out = [q_out[i] for i in range(q_out.rows())] # Convertir el resultado a tipo lista.
+
+  rospy.init_node("ik_gazebo", disable_signals=True)
+
+  client = actionlib.SimpleActionClient('/pos_joint_traj_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
+
+  print("Waiting for server...")
+  client.wait_for_server()
+  print("Connected to server")
+
+  joint_names = ['motor1', 'motor2', 'motor3', 'motor4', 'motor5', 'motor6']
+
+  # Movimiento recto "hacia afuera", eje X
+  x_start = 0.0
+  x_end = 1.0
+  steps = 30
+  x_values = np.linspace(x_start, x_end, steps)  
+
+  q0 = np.array([0.0, -1.2, 1.6, 0.0, 0.0, 0.0])
+
+  for x in x_values:
+        q_sol = ql_out
+        if q_sol is None:
+            print(f"⚠️ IK falló para x = {x:.2f}")
+            continue
+
+        traj = FollowJointTrajectoryGoal()
+        traj.trajectory = JointTrajectory()
+        traj.trajectory.joint_names = joint_names
+
+        point = JointTrajectoryPoint()
+        point.positions = q_sol
+        point.velocities = [0.0] * 6
+        point.time_from_start = rospy.Duration(1.0)
+
+        traj.trajectory.points.append(point)
+        client.send_goal(traj)
+        client.wait_for_result()
+
+        rospy.sleep(0.1)
+        q0 = q_sol  # Para siguiente paso
+
+  print("✅ Movimiento completado.")
+  client.cancel_goal()
