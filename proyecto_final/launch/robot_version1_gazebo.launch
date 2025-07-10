@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <!-- Load the URDF -->
+  <param name="robot_description"
+         textfile="$(find proyecto_final)/urdf/robot_version1.urdf" />
+
+  <!-- Spawn a URDF robot -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false"
+        output="screen" args="-urdf -model robot -param robot_description "/>
+
+  <!-- Load controllers config -->
+  <rosparam file="$(find proyecto_final)/config/robot_config.yaml" command="load"/>
+
+  <!-- Spawn controller -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        args="pos_joint_traj_controller" output="screen"/>
+
+</launch>
